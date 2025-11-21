@@ -34,6 +34,10 @@
   - Módulos de inteligência artificial para sugestão de missões ou mutantes.
   - Desenvolvimento de aplicativos móveis nativos.
 
+### 4. Protótipo
+
+  Protótipos para a página principal e a página do catálogo foram elaborados, e podem ser encontrados [aqui.](https://www.figma.com/design/GitSEihaKIC4SKdeQ0cMuQ/X-Men-Layout?node-id=0-1&t=37BAmgyNyRmaQIuT-1)
+
 # X-Men - Cérebro
 
 Um sistema desenvolvido para localizar, monitorar e catalogar mutantes ao redor do mundo. Aqui você pode acessar os registros oficiais do Instituto Xavier, ver os mutantes mais ativos e descobrir quem está liderando nas missões pela paz entre humanos e mutantes.
@@ -50,7 +54,7 @@ Projeto full‑stack com dockerização, composto por:
 
 ## Como rodar no Docker
 
-1. No diretório raiz do projeto (`X-Men/`), execute:
+1. No diretório raiz do projeto (`Cerebro_X-Men/`), execute:
    
    ```bash
    docker compose up --build -d
