@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Carousel from '../funcionalidades/Carousel';
+import { API_URL, getImageUrl } from '../config/api';
 
 export default function Locais() {
   const [locais, setLocais] = useState([]);
@@ -11,7 +12,7 @@ export default function Locais() {
 
     const fetchLocais = async () => {
       try {
-        const res = await fetch('http://localhost:8080/api/locais');
+        const res = await fetch(API_URL.locais);
         if (!res.ok) throw new Error('Backend não está pronto');
         const data = await res.json();
         if (isMounted) {
@@ -50,7 +51,7 @@ export default function Locais() {
             >
               <img
                 className="cartao-local__imagem"
-                src={`http://localhost:8080/images/locais/${local.imagem}`}
+                src={getImageUrl(`locais/${local.imagem}`)}
                 alt={local.nomeLocal}
               />
               <div className="cartao-local__conteudo">

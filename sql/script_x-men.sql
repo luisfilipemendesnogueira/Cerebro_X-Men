@@ -13,6 +13,20 @@ DROP TABLE IF EXISTS missao;
 DROP TABLE IF EXISTS viloes;
 DROP TABLE IF EXISTS locais;
 DROP TABLE IF EXISTS mutantes;
+DROP TABLE IF EXISTS usuarios;
+
+-- Tabela de Usuários para Autenticação
+CREATE TABLE usuarios (
+  id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nome_usuario VARCHAR(50) UNIQUE NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  senha VARCHAR(255) NOT NULL,
+  nome_completo VARCHAR(100),
+  foto_perfil VARCHAR(100),
+  tipo_acesso ENUM('admin', 'usuario') NOT NULL DEFAULT 'usuario',
+  data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 create table mutantes(
 id_mutante int not null auto_increment primary key,
@@ -156,3 +170,9 @@ SELECT alter_ego, nome, sobrenome, imagem
 FROM mutantes
 WHERE tipo = 'vilao';
 
+-- Inserir usuários admins
+-- Senhas: professor_x/professor123, ciclope/scott123
+-- Hashes gerados com BCrypt (10 rounds)
+INSERT INTO usuarios (nome_usuario, email, senha, nome_completo, tipo_acesso) VALUES
+('professor_x', 'charles@xavier.inst', '$2y$10$Lh1pRzPovogozMGZAxTPtuzBktHALbrR7LMa4f5w0wiP.IIobPtxC', 'Charles Xavier', 'admin'),
+('ciclope', 'scott@xavier.inst', '$2y$10$6bsnmvzP.0eL5Z6nUX2ZOeWodeOWsRj5jZZ9m2Jyu3lSa2zb1YQYK', 'Scott Summers', 'admin');

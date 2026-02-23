@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Cards from './Cards';
+import { auth } from '../utils/auth';
 
 export default function Catalogo() {
     const [searchTerm, setSearchTerm] = useState('');
     const [cards, setCards] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(true);
+    const user = auth.getCurrentUser();
+    const isAdmin = user?.tipoAcesso === 'admin';
     const [formData, setFormData] = useState({
         alterEgo: '',
         nome: '',
@@ -156,15 +159,17 @@ export default function Catalogo() {
                         )}
                     />
 
-                    <div className="botao-registro">
-                        <button
-                            className="botao-catalogo registro"
-                            type="button"
-                            onClick={() => setShowModal(true)}
-                        >
-                            Registrar Novo Mutante
-                        </button>
-                    </div>
+                    {isAdmin && (
+                        <div className="botao-registro">
+                            <button
+                                className="botao-catalogo registro"
+                                type="button"
+                                onClick={() => setShowModal(true)}
+                            >
+                                Registrar Novo Mutante
+                            </button>
+                        </div>
+                    )}
 
                     {showModal && (
                         <div className="modal">

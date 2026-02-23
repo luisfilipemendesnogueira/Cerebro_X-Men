@@ -1,0 +1,335 @@
+/* ===========================
+   Perfil do Usuário no Header
+=========================== */
+
+.perfil-usuario {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  position: relative;
+  background: rgba(255, 208, 0, 0.1);
+}
+
+.perfil-usuario:hover {
+  background: rgba(255, 208, 0, 0.2);
+}
+
+.perfil-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--cor-primaria-clara);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cor-fundo-cards);
+}
+
+.perfil-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  font-weight: var(--peso-bold);
+  color: var(--cor-primaria-clara);
+  font-size: 16px;
+}
+
+.perfil-nome {
+  font-size: 14px;
+  font-weight: var(--peso-semibold);
+  color: var(--cor-texto-claro);
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Menu Dropdown */
+.perfil-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--cor-fundo-cards);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  min-width: 250px;
+  margin-top: 12px;
+  padding: 0;
+  border: 1px solid rgba(255, 208, 0, 0.2);
+  animation: slideDown 0.3s ease;
+  z-index: 1001;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-header h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: var(--cor-texto-claro);
+  font-weight: var(--peso-semibold);
+}
+
+.dropdown-email {
+  margin: 0;
+  font-size: 12px;
+  color: var(--cor-texto-suave);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 8px 0;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  color: var(--cor-texto-claro);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 208, 0, 0.15);
+  padding-left: 20px;
+  color: var(--cor-primaria-clara);
+}
+
+.dropdown-item.logout {
+  color: #ff6b6b;
+}
+
+.dropdown-item.logout:hover {
+  background: rgba(255, 107, 107, 0.15);
+  color: #ff8787;
+}
+
+/* Modal Gerenciar Admins */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-cadastro-admin {
+  background: var(--cor-fundo-cards);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 208, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-cadastro-admin h3 {
+  margin: 0 0 20px 0;
+  font-size: 22px;
+  color: var(--cor-texto-claro);
+  font-weight: var(--peso-bold);
+}
+
+.modal-cadastro-admin form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-cadastro-admin input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--cor-texto-claro);
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.modal-cadastro-admin input:focus {
+  outline: none;
+  border-color: var(--cor-primaria-clara);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 208, 0, 0.3);
+}
+
+.modal-cadastro-admin input::placeholder {
+  color: var(--cor-texto-suave);
+}
+
+.admin-mensagem {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 12px;
+  text-align: center;
+  font-weight: var(--peso-semibold);
+}
+
+.admin-mensagem.sucesso {
+  background: rgba(76, 175, 80, 0.2);
+  border: 1px solid rgba(76, 175, 80, 0.5);
+  color: #81c784;
+}
+
+.admin-mensagem.erro {
+  background: rgba(244, 67, 54, 0.2);
+  border: 1px solid rgba(244, 67, 54, 0.5);
+  color: #ef5350;
+}
+
+.modal-botoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.botao-admin-salvar,
+.botao-admin-cancelar {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: var(--peso-semibold);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.botao-admin-salvar {
+  background: var(--gradiente-primario);
+  color: var(--cor-texto-claro);
+}
+
+.botao-admin-salvar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 208, 0, 0.3);
+}
+
+.botao-admin-cancelar {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--cor-texto-claro);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.botao-admin-cancelar:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .perfil-nome {
+    display: none;
+  }
+
+  .perfil-usuario {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .perfil-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .perfil-dropdown {
+    min-width: 220px;
+    right: -20px;
+  }
+
+  .modal-cadastro-admin {
+    padding: 24px;
+  }
+
+  .modal-cadastro-admin h3 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-usuario {
+    padding: 4px 8px;
+  }
+
+  .perfil-avatar {
+    width: 28px;
+    height: 28px;
+    border-width: 1px;
+  }
+
+  .perfil-dropdown {
+    min-width: 200px;
+    right: -30px;
+    margin-top: 8px;
+  }
+
+  .dropdown-header {
+    padding: 12px;
+  }
+
+  .dropdown-item {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .modal-cadastro-admin {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .modal-cadastro-admin h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .modal-cadastro-admin input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .botao-admin-salvar,
+  .botao-admin-cancelar {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}

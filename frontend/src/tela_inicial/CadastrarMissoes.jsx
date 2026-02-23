@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ImagemFormulario from '../assets/images/imagem_formulario.png';
 import StarRating from '../funcionalidades/StarRating';
+import { auth } from '../utils/auth';
 
 function CadastroMissao() {
+    const user = auth.getCurrentUser();
+    const isAdmin = user?.tipoAcesso === 'admin';
     const [herois, setHerois] = useState([]);
     const [viloes, setViloes] = useState([]);
     const [locais, setLocais] = useState([]);
@@ -93,6 +96,17 @@ function CadastroMissao() {
 
     if (loading) {
         return <p className="loader-banco">Carregando banco de dados...</p>;
+    }
+
+    if (!isAdmin) {
+        return (
+            <section id="cadastro-missao" className="container secao-cadastro-missao">
+                <div className="acesso-negado">
+                    <h3>Acesso Restrito</h3>
+                    <p>Apenas administradores podem cadastrar novas missões.</p>
+                </div>
+            </section>
+        );
     }
 
     return (

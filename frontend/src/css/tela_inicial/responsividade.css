@@ -29,17 +29,8 @@
 
 /* === RESPONSIVIDADE PARA O CABEÇALHO FIXO === */
 @media (max-width: 1080px) {
-  .menu-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    order: 2;
-    width: 7vh;
-    height: 38px;
-    column-gap: 8px;
-    color: #000;
-    mix-blend-mode: normal;
-    border-radius: 999px;
+  .cabecalho-fixo__acoes {
+    gap: 10px;
   }
 
   .cabecalho-fixo__menu-hamburguer {
@@ -53,12 +44,6 @@
     padding: 0;
   }
 
-  .emptyspace {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-  }
-
   .cabecalho-fixo__menu-hamburguer span {
     background-color: white;
     height: 3px;
@@ -67,15 +52,15 @@
     transition: all 0.3s ease-in-out;
   }
 
-  .cabecalho-fixo__nav.ativo .cabecalho-fixo__menu-hamburguer span:nth-child(1) {
+  .cabecalho-fixo__menu-hamburguer.ativo span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
   }
 
-  .cabecalho-fixo__nav.ativo .cabecalho-fixo__menu-hamburguer span:nth-child(2) {
+  .cabecalho-fixo__menu-hamburguer.ativo span:nth-child(2) {
     opacity: 0;
   }
 
-  .cabecalho-fixo__nav.ativo .cabecalho-fixo__menu-hamburguer span:nth-child(3) {
+  .cabecalho-fixo__menu-hamburguer.ativo span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }
 
