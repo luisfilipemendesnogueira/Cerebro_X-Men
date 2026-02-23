@@ -113,10 +113,10 @@ export default function Catalogo() {
     };
 
     const filteredCards = cards.filter(card => {
-        const term = searchTerm.toLowerCase();
-        if (!term) return true;
-        const words = `${card.titulo} ${card.info}`.toLowerCase().split(/\s+/);
-        return words.some(word => word.startsWith(term));
+        const searchTerms = searchTerm.toLowerCase().trim().split(/\s+/).filter(t => t.length > 0);
+        if (searchTerms.length === 0) return true;
+        const cardWords = `${card.titulo} ${card.info}`.toLowerCase().split(/\s+/);
+        return searchTerms.every(term => cardWords.some(word => word.startsWith(term)));
     });
 
     return (

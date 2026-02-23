@@ -17,7 +17,7 @@
 .cards-slide {
   display: grid;
   gap: var(--cards-gap, 10px);
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
 /* ===========================
@@ -42,7 +42,7 @@
   .cards-slide {
     grid-template-columns: repeat(2, 1fr);
   }
-
+  
   .botao-modal{
     flex-direction: column;
   }
