@@ -477,17 +477,31 @@ body.loading {
 .secao-artigo-imagem-wrapper {
     position: relative;
     width: 100%;
-    height: auto;
+    min-height: clamp(220px, 30vw, 380px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: var(--sombra-cartao);
     margin-top: 5px;
 }
 
-.secao-artigo-imagem-wrapper img {
-    width: 100%;
+.artigo-imagem {
+    width: auto;
+    max-width: 100%;
+    max-height: clamp(220px, 30vw, 380px);
     height: auto;
+    object-fit: contain;
     display: block;
     user-select: none;
+}
+
+.artigo-imagem--magneto {
+    max-height: clamp(180px, 24vw, 300px);
+}
+
+.artigo-imagem--genosha {
+    max-height: clamp(260px, 34vw, 450px);
 }
 
 .secao-artigo-imagem-wrapper:hover {

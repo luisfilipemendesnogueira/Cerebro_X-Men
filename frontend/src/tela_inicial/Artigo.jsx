@@ -47,7 +47,8 @@ export default function Artigo() {
                 "O Massacre de Genosha marcou uma virada no universo X-Men, intensificando debates sobre segurança, diplomacia, memória coletiva e responsabilidade internacional diante da perseguição aos mutantes."
             ],
             imagem: Genosha,
-            alt: "Imagem de Genosha."
+            alt: "Imagem de Genosha.",
+            classeImagem: "artigo-imagem--genosha"
         },
         {
             titulo: "Magneto: Passado, Trauma e Ideologia",
@@ -58,7 +59,8 @@ export default function Artigo() {
                 "Por isso, Magneto oscila entre aliado e antagonista dos X-Men: ele luta pela preservação mutante a qualquer custo, em constante choque com a estratégia de coexistência pacífica de Xavier."
             ],
             imagem: Magneto,
-            alt: "Imagem de Magneto."
+            alt: "Imagem de Magneto.",
+            classeImagem: "artigo-imagem--magneto"
         },
         {
             titulo: "Ororo Munroe: A Mutante Vista Como Deusa",
@@ -137,7 +139,7 @@ export default function Artigo() {
                                 <img
                                     src={s.imagem}
                                     alt={s.alt}
-                                    className="imagem-conselho-silencioso"
+                                    className={`artigo-imagem ${s.classeImagem ?? ''}`}
                                 />
                             </div>
                         </div>
