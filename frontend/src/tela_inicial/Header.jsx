@@ -35,7 +35,8 @@ function Header() {
     setMenuAtivo(false);
 
     if (location.pathname !== '/') {
-      navigate(`/#${id}`);
+      sessionStorage.setItem('scrollToSection', id);
+      navigate('/');
       return;
     }
 

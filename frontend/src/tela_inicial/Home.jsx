@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../assets/images/logo.png';
 
 const scrollToSection = (id) => (event) => {
@@ -10,6 +10,21 @@ const scrollToSection = (id) => (event) => {
 };
 
 function Home() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+
+        const targetSectionId = sessionStorage.getItem('scrollToSection');
+        if (!targetSectionId) return;
+
+        sessionStorage.removeItem('scrollToSection');
+        requestAnimationFrame(() => {
+            const section = document.getElementById(targetSectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }, []);
+
     return (
         <header id="cabecalho" className="container secao-home">
             <div className="secao-home__barra-topo">
