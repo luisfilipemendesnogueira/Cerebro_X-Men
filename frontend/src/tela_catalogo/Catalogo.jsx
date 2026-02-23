@@ -17,6 +17,22 @@ export default function Catalogo() {
         tipo: ''
     });
 
+    const fetchMutantes = async () => {
+        const res = await fetch('http://localhost:8080/api/mutantes');
+        if (!res.ok) throw new Error('Backend não está pronto');
+
+        const data = await res.json();
+        const mappedCards = data.map(m => ({
+            imagem: `http://localhost:8080/images/personagens/${m.imagem}`,
+            titulo: m.alterEgo,
+            info: `${m.nome} ${m.sobrenome}`.trim(),
+            link: m.link
+        }));
+
+        setCards(mappedCards);
+        setLoading(false);
+    };
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -25,30 +41,18 @@ export default function Catalogo() {
         let isMounted = true;
         let intervalId;
 
-        const fetchMutantes = async () => {
+        const pollMutantes = async () => {
             try {
-                const res = await fetch('http://localhost:8080/api/mutantes');
-                if (!res.ok) throw new Error('Backend não está pronto');
-                const data = await res.json();
-
-                if (isMounted && data.length > 0) {
-                    const mappedCards = data.map(m => ({
-                        imagem: `http://localhost:8080/images/personagens/${m.imagem}`,
-                        titulo: m.alterEgo,
-                        info: `${m.nome} ${m.sobrenome}`,
-                        link: m.link
-                    }));
-                    setCards(mappedCards);
-                    setLoading(false);
-                    clearInterval(intervalId);
-                }
+                if (!isMounted) return;
+                await fetchMutantes();
+                clearInterval(intervalId);
             } catch (err) {
                 console.log('Backend ainda não respondeu, tentando novamente...');
             }
         };
 
-        fetchMutantes();
-        intervalId = setInterval(fetchMutantes, 2000);
+        pollMutantes();
+        intervalId = setInterval(pollMutantes, 2000);
 
         return () => {
             isMounted = false;
@@ -65,7 +69,7 @@ export default function Catalogo() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!formData.alterEgo.trim()) {
@@ -92,31 +96,29 @@ export default function Catalogo() {
         form.append('tipo', formData.tipo);
         if (formData.imagem) form.append('imagem', formData.imagem);
 
-        fetch('http://localhost:8080/api/mutantes', {
-            method: 'POST',
-            body: form
-        })
-            .then(res => res.text())
-            .then(msg => {
-                setShowModal(false);
-                const newCard = {
-                    imagem: formData.imagem
-                        ? URL.createObjectURL(formData.imagem)
-                        : `http://localhost:8080/images/personagens/sem-imagem.png`,
-                    titulo: formData.alterEgo,
-                    info: `${formData.nome} ${formData.sobrenome}`,
-                    link: ''
-                };
-                setCards(prev => [...prev, newCard]);
-                setFormData({
-                    alterEgo: '',
-                    nome: '',
-                    sobrenome: '',
-                    imagem: null,
-                    tipo: ''
-                });
-            })
-            .catch(err => alert("Erro ao registrar: " + err));
+        try {
+            const res = await fetch('http://localhost:8080/api/mutantes', {
+                method: 'POST',
+                body: form
+            });
+            const msg = await res.text();
+
+            if (!res.ok) {
+                throw new Error(msg || 'Falha ao registrar mutante.');
+            }
+
+            await fetchMutantes();
+            setShowModal(false);
+            setFormData({
+                alterEgo: '',
+                nome: '',
+                sobrenome: '',
+                imagem: null,
+                tipo: ''
+            });
+        } catch (err) {
+            alert("Erro ao registrar: " + err.message);
+        }
     };
 
     const filteredCards = cards.filter(card => {

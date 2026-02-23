@@ -3,6 +3,8 @@ package backend.controller;
 import backend.MySQLConnection;
 import backend.dao.MutanteDAO;
 import backend.model.Mutante;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +32,7 @@ public class MutanteController {
     }
     
     @PostMapping("/api/mutantes")
-    public String addMutante(
+    public ResponseEntity<String> addMutante(
             @RequestParam("alterEgo") String alterEgo,
             @RequestParam("nome") String nome,
             @RequestParam("sobrenome") String sobrenome,
@@ -39,14 +41,14 @@ public class MutanteController {
 
         // Validação dos campos obrigatórios
         if (alterEgo == null || alterEgo.trim().isEmpty()) {
-            return "Erro: 'Alter Ego' é obrigatório!";
+            return ResponseEntity.badRequest().body("Erro: 'Alter Ego' é obrigatório!");
         }
         if (nome == null || nome.trim().isEmpty()) {
-            return "Erro: 'Nome' é obrigatório!";
+            return ResponseEntity.badRequest().body("Erro: 'Nome' é obrigatório!");
         }
         
         if (tipo == null || (!tipo.equalsIgnoreCase("heroi") && !tipo.equalsIgnoreCase("vilao"))) {
-            return "Erro: Escolha um 'Tipo'!";
+            return ResponseEntity.badRequest().body("Erro: Escolha um 'Tipo'!");
         }
 
         // Caminho absoluto baseado na raiz do projeto
@@ -80,10 +82,11 @@ public class MutanteController {
             MutanteDAO dao = new MutanteDAO();
             dao.insertMutante(alterEgo, nome, sobrenome, fileName, tipo);
 
-            return "Mutante registrado com sucesso!";
+            return ResponseEntity.status(HttpStatus.CREATED).body("Mutante registrado com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
-            return "Erro ao registrar mutante: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao registrar mutante: " + e.getMessage());
         }
     }
     

@@ -6,6 +6,7 @@ import backend.MySQLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +40,15 @@ public class MutanteDAO {
         return mutantes;
     }
 
-    public void insertMutante(String alterEgo, String nome, String sobrenome, String imagem, String tipo) {
+    public void insertMutante(String alterEgo, String nome, String sobrenome, String imagem, String tipo) throws SQLException {
         String sql = "INSERT INTO mutantes (alter_ego, nome, sobrenome, link, imagem, tipo) VALUES (?, ?, ?, '', ?, ?)";
 
         try (Connection conn = MySQLConnection.getConnection(); 
         PreparedStatement psMutante = conn.prepareStatement(sql)) {
+            if (conn == null) {
+                throw new SQLException("Não foi possível conectar ao banco de dados.");
+            }
+
             psMutante.setString(1, alterEgo);
             psMutante.setString(2, nome);
             psMutante.setString(3, sobrenome);
@@ -61,8 +66,6 @@ public class MutanteDAO {
                     psVilao.executeUpdate();
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
