@@ -134,17 +134,11 @@ export default function Artigo() {
                         </ul>
                         <div className="secao-artigo-imagem-container">
                             <div className="secao-artigo-imagem-wrapper">
-                                <a
-                                    href=""
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    <img
-                                        src={s.imagem}
-                                        alt={s.alt}
-                                        className="imagem-conselho-silencioso"
-                                    />
-                                </a>
+                                <img
+                                    src={s.imagem}
+                                    alt={s.alt}
+                                    className="imagem-conselho-silencioso"
+                                />
                             </div>
                         </div>
                     </div>
