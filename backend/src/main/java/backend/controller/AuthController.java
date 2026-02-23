@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -185,6 +190,49 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/usuario/{id}/foto")
+    public ResponseEntity<?> uploadFotoPerfil(@PathVariable int id, @RequestParam("foto") MultipartFile foto) {
+        Usuario usuario = usuarioDAO.findById(id);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("Usuário não encontrado"));
+        }
+
+        if (foto == null || foto.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse("Arquivo de foto é obrigatório"));
+        }
+
+        try {
+            String uploadDirPath = "/app/uploads/images/perfis/";
+            File uploadDir = new File(uploadDirPath);
+            if (!uploadDir.exists() && !uploadDir.mkdirs()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(new ErrorResponse("Não foi possível criar pasta de upload"));
+            }
+
+            String originalName = foto.getOriginalFilename();
+            String safeName = (originalName == null || originalName.isBlank())
+                    ? "perfil_" + id + ".png"
+                    : originalName.replaceAll("[^a-zA-Z0-9._-]", "_");
+            String fileName = id + "_" + System.currentTimeMillis() + "_" + safeName;
+
+            File destino = new File(uploadDir, fileName);
+            foto.transferTo(destino);
+
+            usuario.setFotoPerfil("/images/perfis/" + fileName);
+            if (!usuarioDAO.update(usuario)) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(new ErrorResponse("Erro ao salvar foto de perfil"));
+            }
+
+            return ResponseEntity.ok(toLoginResponse(usuario));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ErrorResponse("Erro ao fazer upload da foto", e.getMessage()));
+        }
+    }
+
     // Endpoint para cadastrar novo admin (apenas admins podem fazer)
     @PostMapping("/admin/register")
     public ResponseEntity<?> registerAdmin(@RequestBody RegisterRequest request) {
@@ -225,5 +273,47 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ErrorResponse("Erro ao registrar admin"));
         }
+    }
+
+    @GetMapping("/admins")
+    public ResponseEntity<List<LoginResponse>> getAdmins() {
+        List<Usuario> admins = usuarioDAO.findByTipoAcesso("admin");
+        List<LoginResponse> response = new ArrayList<>();
+        for (Usuario admin : admins) {
+            response.add(toLoginResponse(admin));
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<?> deleteAdmin(@PathVariable int id, @RequestParam(name = "requesterId") int requesterId) {
+        Usuario admin = usuarioDAO.findById(id);
+        if (admin == null || !"admin".equals(admin.getTipoAcesso())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ErrorResponse("Admin não encontrado"));
+        }
+
+        if (id == requesterId) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse("Não é permitido remover o próprio usuário"));
+        }
+
+        if (usuarioDAO.deleteById(id)) {
+            return ResponseEntity.ok(new ErrorResponse("Admin removido com sucesso"));
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorResponse("Erro ao remover admin"));
+    }
+
+    private LoginResponse toLoginResponse(Usuario usuario) {
+        return new LoginResponse(
+                usuario.getIdUsuario(),
+                usuario.getNomeUsuario(),
+                usuario.getNomeCompleto(),
+                usuario.getEmail(),
+                usuario.getTipoAcesso(),
+                usuario.getFotoPerfil()
+        );
     }
 }

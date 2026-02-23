@@ -1,0 +1,151 @@
+.secao-editar-perfil {
+  min-height: 100vh;
+  padding: 110px 20px 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.editar-perfil-card {
+  width: min(720px, 100%);
+  background: var(--cor-fundo-cards);
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid rgba(255, 208, 0, 0.2);
+  box-shadow: var(--sombra-cartao);
+}
+
+.editar-perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.editar-perfil-header h2 {
+  color: var(--cor-primaria-clara);
+  font-size: 30px;
+  font-weight: var(--peso-bold);
+}
+
+.editar-perfil-acoes-topo {
+  display: flex;
+  gap: 10px;
+}
+
+.botao-voltar {
+  background: transparent;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--cor-texto-claro);
+  cursor: pointer;
+}
+
+.botao-voltar--primario {
+  background: var(--gradiente-primario);
+  border-color: transparent;
+  color: #111;
+  font-weight: var(--peso-semibold);
+}
+
+.editar-perfil-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.editar-perfil-form label {
+  color: var(--cor-texto-suave);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.editar-perfil-form input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cor-texto-claro);
+}
+
+.editar-perfil-form input:disabled {
+  opacity: 0.7;
+}
+
+.foto-preview-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.foto-preview,
+.foto-placeholder {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--cor-primaria-clara);
+}
+
+.foto-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: var(--cor-primaria-clara);
+  background: rgba(255, 208, 0, 0.12);
+}
+
+.botao-selecionar-foto {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--cor-texto-claro);
+  cursor: pointer;
+}
+
+.botao-selecionar-foto input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.botao-salvar-perfil {
+  margin-top: 8px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gradiente-primario);
+  color: #111;
+  font-weight: var(--peso-bold);
+  cursor: pointer;
+}
+
+.perfil-mensagem {
+  font-size: 14px;
+}
+
+.perfil-mensagem.sucesso {
+  color: #85e89d;
+}
+
+.perfil-mensagem.erro {
+  color: #ff8f8f;
+}
+
+@media (max-width: 680px) {
+  .editar-perfil-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

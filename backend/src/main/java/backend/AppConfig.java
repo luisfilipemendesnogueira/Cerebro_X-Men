@@ -24,5 +24,8 @@ public class AppConfig implements WebMvcConfigurer {
         
         registry.addResourceHandler("/images/locais/**")
         .addResourceLocations("file:uploads/images/locais/");
+
+        registry.addResourceHandler("/images/perfis/**")
+                .addResourceLocations("file:uploads/images/perfis/");
     }
 }

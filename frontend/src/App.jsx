@@ -12,6 +12,8 @@ import Footer from './tela_inicial/Footer';
 import Catalogo from './tela_catalogo/Catalogo';
 import Login from './tela_login/Login';
 import ProtectedRoute from './componentes/ProtectedRoute';
+import EditarPerfil from './tela_perfil/EditarPerfil';
+import GerenciarAdmins from './tela_admin/GerenciarAdmins';
 import { auth } from './utils/auth';
 
 function App() {
@@ -60,7 +62,32 @@ function App() {
             <ProtectedRoute>
               <>
                 <Loader />
+                <Header />
                 <Catalogo />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editar-perfil"
+          element={
+            <ProtectedRoute>
+              <>
+                <Loader />
+                <Header />
+                <EditarPerfil />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gerenciar-admins"
+          element={
+            <ProtectedRoute requiredAccess="admin">
+              <>
+                <Loader />
+                <Header />
+                <GerenciarAdmins />
               </>
             </ProtectedRoute>
           }

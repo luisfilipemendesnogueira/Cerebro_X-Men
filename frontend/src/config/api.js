@@ -5,6 +5,7 @@ export const API_URL = {
   authLogin: `${API_BASE}/api/auth/login`,
   authRegister: `${API_BASE}/api/auth/register`,
   authRegisterAdmin: `${API_BASE}/api/auth/admin/register`,
+  authAdmins: `${API_BASE}/api/auth/admins`,
   mutantes: `${API_BASE}/api/mutantes`,
   locais: `${API_BASE}/api/locais`,
   viloes: `${API_BASE}/api/viloes`,

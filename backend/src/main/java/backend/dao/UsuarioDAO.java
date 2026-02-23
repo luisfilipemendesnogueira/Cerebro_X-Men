@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
 
@@ -99,6 +101,35 @@ public class UsuarioDAO {
             ps.setString(2, usuario.getEmail());
             ps.setString(3, usuario.getFotoPerfil());
             ps.setInt(4, usuario.getIdUsuario());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Usuario> findByTipoAcesso(String tipoAcesso) {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT * FROM usuarios WHERE tipo_acesso = ? ORDER BY id_usuario ASC";
+        try (Connection conn = MySQLConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, tipoAcesso);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    usuarios.add(mapUsuario(rs));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return usuarios;
+    }
+
+    public boolean deleteById(int idUsuario) {
+        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
+        try (Connection conn = MySQLConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
