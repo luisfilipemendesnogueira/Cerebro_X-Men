@@ -4,6 +4,9 @@ import Logo from '../assets/images/logo2.png';
 import { auth } from '../utils/auth';
 import { API_URL } from '../config/api';
 import '../css/tela_inicial/header.css';
+import exit from '../assets/icons/exit-svgrepo-com.svg';
+import pencilSquare from '../assets/icons/pencil-square-svgrepo-com.svg';
+import settings from '../assets/icons/settings-svgrepo-com.svg';
 
 function Header() {
   const [menuAtivo, setMenuAtivo] = useState(false);
@@ -92,20 +95,31 @@ function Header() {
 
                   <div className="dropdown-divider"></div>
 
-                  <Link to="/editar-perfil" className="dropdown-item" onClick={() => setPerfilMenuAtivo(false)}>
-                    ⚙️ Editar Perfil
+                  <Link
+                    to="/editar-perfil"
+                    className="dropdown-item dropdown-item-with-icon"
+                    onClick={() => setPerfilMenuAtivo(false)}
+                  >
+                    <img className="dropdown-item-icon" src={pencilSquare} alt="Ícone de editar perfil" />
+                    <span>Editar Perfil</span>
                   </Link>
 
                   {user.tipoAcesso === 'admin' && (
-                    <Link to="/gerenciar-admins" className="dropdown-item" onClick={() => setPerfilMenuAtivo(false)}>
-                      👑 Gerenciar Administradores
+                    <Link
+                      to="/gerenciar-admins"
+                      className="dropdown-item dropdown-item-with-icon"
+                      onClick={() => setPerfilMenuAtivo(false)}
+                    >
+                      <img className="dropdown-item-icon" src={settings} alt="Ícone de gerenciar administradores" />
+                      <span>Gerenciar Administradores</span>
                     </Link>
                   )}
 
                   <div className="dropdown-divider"></div>
 
                   <button className="dropdown-item logout" onClick={handleLogout}>
-                    🚪 Logout
+                    <img className="dropdown-item-icon" src={exit} alt="Ícone de sair" />
+                    <span>Sair</span>
                   </button>
                 </div>
               )}

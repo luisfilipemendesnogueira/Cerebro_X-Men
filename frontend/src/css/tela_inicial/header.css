@@ -124,12 +124,31 @@
 }
 
 .dropdown-item.logout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 16px;
   color: #ff6b6b;
 }
 
 .dropdown-item.logout:hover {
   background: rgba(255, 107, 107, 0.15);
   color: #ff8787;
+}
+
+.dropdown-item-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 16px;
+}
+
+.dropdown-item-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: block;
+  transform: translateY(-2px);
 }
 
 /* Modal Gerenciar Admins */
