@@ -66,7 +66,7 @@ Para superar esses pontos, foram adotados:
    docker compose up --build -d
    ```
 
-3. Acesse a aplicação em: `http://localhost:5174`
+3. Acesse a aplicação em: http://localhost:5174
 
 4. Aguarde alguns segundos até que o banco de dados seja carregado no frontend.
 
