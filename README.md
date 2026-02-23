@@ -76,7 +76,7 @@ Para superar esses pontos, foram adotados:
    docker compose down
    ```
 
-> Observação: para reiniciar do zero (apagando dados do MySQL e uploads), use `docker compose down -v`. Isso remove o volume `db_data` e você perderá os dados.
+> Observação: para reiniciar do zero (apagando dados do MySQL e uploads), use `docker compose down -v`. Isso remove o volume `db_data` e você perderá os dados novos adicionados.
 
 ---
 
