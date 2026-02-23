@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import arrowBack from '../assets/icons/left-arrow-backup-2-svgrepo-com.svg';
 import arrowNext from '../assets/icons/right-arrow-backup-2-svgrepo-com.svg';
 
-export default function Carousel({ items, renderItem, itemsPerView: defaultItemsPerView = 3 }) {
+export default function Carousel({ items, renderItem, itemsPerView: defaultItemsPerView = 3, onSlideChange }) {
   const slideRef = useRef(null);
   const wrapperRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,6 +70,12 @@ export default function Carousel({ items, renderItem, itemsPerView: defaultItems
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, [itemsPerView, items.length, currentIndex]);
+
+  useEffect(() => {
+    if (onSlideChange) {
+      onSlideChange(currentIndex);
+    }
+  }, [currentIndex, onSlideChange]);
 
   const moveToIndex = (index) => {
     const lastIndex = Math.max(0, items.length - itemsPerView);

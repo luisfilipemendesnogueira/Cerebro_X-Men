@@ -431,6 +431,10 @@ body.loading {
     z-index: 0;
 }
 
+.titulo-artigo-carousel {
+    display: none;
+}
+
 .secao-artigo-lista {
     flex: 1 1 55%;
     max-width: 700px;
